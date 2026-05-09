@@ -1,0 +1,9 @@
+numpy
+pandas
+scipy
+matplotlib
+jupyter
+ipykernel
+pywavelets
+vmdpy
+ssqueezepy
