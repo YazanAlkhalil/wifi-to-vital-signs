@@ -14,14 +14,29 @@ User is a college student. Read `README.md` for the longer write-up.
 
 ## Working directory
 
-`/Users/kpj/college/groudation project` (yes, "groudation" — typo in the path, leave it).
+The project is worked on from two machines. Check which one you're on before
+assuming paths:
+
+- **macOS (original)**: `/Users/kpj/college/groudation project` (yes, "groudation" — typo in the path, leave it).
+- **Windows**: `C:\Users\Lenovo\Downloads\grad project`.
 
 ## Environment
 
-- Python 3.14 venv at `.venv/`.
-- Activate: `source .venv/bin/activate` (or run binaries directly via `.venv/bin/python`, `.venv/bin/jupyter`).
-- Deps: numpy, pandas, scipy, matplotlib, jupyter, ipykernel — pinned in `requirements.txt`.
-- Jupyter kernel registered as **`Python (groudation)`** — that's the one to pick in the notebook UI.
+Full from-scratch instructions — both OSes, plus the ESP32 firmware and driver
+setup — are in **`SETUP.md`**. Summary:
+
+- Venv at `.venv/`. **Python 3.12 on Windows** (3.14 has no `numba` wheel, which
+  `ssqueezepy` needs, so the install fails); 3.14 on the original Mac.
+- Run binaries directly: `.venv\Scripts\python.exe` (Windows), `.venv/bin/python` (macOS).
+- Deps in `requirements.txt` — **unpinned**, so versions drift between machines.
+  Known-good versions are tabled in `SETUP.md` §A3.
+- `python verify_env.py` checks imports + serial ports + reproduces 11.66 BPM
+  from `captures/capture_1778960307.csv`. Run it first when anything looks off.
+- Jupyter kernel registered as **`Python (groudation)`** on the Mac — that's the one to pick in the notebook UI.
+- Serial-dependent scripts (`26_*`, `27_*`) **auto-detect** the board via
+  `notebooks/csi_serial.py:resolve_port()` — it probes each port for `CSI_DATA`
+  lines. `CSI_PORT`/`CSI_BAUD` override it. Never hardcode a port name: COM
+  numbers follow the USB socket and change on replug.
 - **NumPy is 2.x**: `np.fromstring` is gone — use `np.array(s.split(), dtype=...)`. `Series.to_numpy()` returns a read-only view, so call `.copy()` before any in-place op (`-=`, `+=`).
 
 ## Datasets

@@ -5,3 +5,7 @@ __pycache__/
 .DS_Store
 datasets/
 papers/
+
+# Capture CSVs are kept -- verify_env.py and the sweep scripts reference
+# specific ones by name. The plots beside them are regenerated on demand.
+captures/*.png
